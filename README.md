@@ -53,14 +53,6 @@ You can try the game live here:
 
 ---
 
-## 🧑‍💻 Author
-
-Made with 💙 by [Bhavesh Yadav](https://github.com/ybhavesh-0915)
-
----
-
 ## 📄 License
 
-This project is licensed under the **MIT License** – feel free to use, modify, and distribute it.
-
-> ⚠️ No warranty or guarantees included. Use at your own risk.
+This project is licensed under the MIT License
