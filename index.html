@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simson Say</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            height: 100dvh;
+            width: 100dvw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btnWrapper {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .btn {
+            width: 150px;
+            aspect-ratio: 1/1;
+            border: 10px solid black;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .red {
+            background-color: #d55075;
+        }
+
+        .yellow {
+            background-color: #fa903b;
+        }
+
+        .green {
+            background-color: #58a0b9;
+        }
+
+        .blue {
+            background-color: #7794f8;
+        }
+
+        .flash {
+            background-color: #fff !important;
+        }
+
+        .btns:focus {
+            color: grey;
+        }
+
+        @keyframes click {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.8);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        span {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Press any key to start</h2>
+    <div class="btnWrapper">
+        <div id="red" class="btn red" type="button"></div>
+        <div id="yellow" class="btn yellow" type="button"></div>
+        <div id="green" class="btn green" type="button"></div>
+        <div id="blue" class="btn blue" type="button"></div>
+    </div>
+    <span class="highScore"></span>
+    <script>
+        "use strict";
+        let gameSeq = [];
+        let userSeq = [];
+        let started = false;
+        let higherScore = 0;
+        let btns = document.getElementsByClassName("btn");
+        let h2 = document.querySelector("h2");
+        let span = document.querySelector("span");
+        document.addEventListener("keydown", (e) => {
+            e.preventDefault();
+            startGame();
+        })
+        document.addEventListener("touchstart", startGame)
+
+        function startGame() {
+            if (!started) {
+                started = true;
+                levelUp();
+                for (let i = 0; i < btns.length; i++) {
+                    btns[i].addEventListener("click", clickBtn)
+                }
+            }
+        }
+
+        function flash() {
+            let rndIdx = Math.floor(Math.random() * (btns.length));
+            btns[rndIdx].classList.add("flash");
+            setTimeout(() => {
+                btns[rndIdx].classList.remove("flash");
+            }, 250);
+            gameSeq.push(btns[rndIdx].getAttribute("id"))
+            // console.log(gameSeq);
+        }
+
+        function levelUp() {
+            userSeq = [];
+            flash();
+            h2.innerText = `Level ${gameSeq.length}`
+        }
+
+        function reset() {
+            if (gameSeq.length - 1 > higherScore) {
+                higherScore = gameSeq.length - 1;
+            }
+            gameSeq = [];
+            userSeq = [];
+            started = false;
+        }
+
+        function checkSeq(idx) {
+            if (gameSeq[idx] == userSeq[idx]) {
+                if (gameSeq.length == userSeq.length) {
+                    setTimeout(levelUp, 1000)
+                }
+            } else {
+                h2.innerHTML = `Your Score is <b>${gameSeq.length - 1} <br/> press any key restart</b>`;
+                reset();
+                span.innerHTML = `Your Highest Score is <b>${higherScore}</b>`;
+                for (let i = 0; i < btns.length; i++) {
+                    btns[i].removeEventListener("click", clickBtn)
+                }
+            }
+        }
+
+        function clickBtn() {
+            userSeq.push(this.getAttribute("id"));
+            checkSeq(userSeq.length - 1);
+            this.style.setProperty("animation", "click 0.2s linear 1");
+            this.addEventListener("animationend", function () {
+                this.removeAttribute("style");
+            }, { once: true })
+        }
+    </script>
+</body>
+
+</html>
