@@ -49,10 +49,10 @@ Simon-Say-JS/
 ## 📸 Live Demo
 
 You can try the game live here:  
-🔗 [https://ybhavesh-0915.github.io/Simon-Say-JS](https://ybhavesh-0915.github.io/Simon-Say-JS) *(after deployment)*
+🔗 [Try It](https://ybhavesh-0915.github.io/Simon-Say-JS)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License
+This project is licensed under the MIT License(LICENSE)
