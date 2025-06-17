@@ -55,4 +55,4 @@ You can try the game live here:
 
 ## 📄 License
 
-This project is licensed under the MIT License(LICENSE)
+This project is licensed under the [MIT License](LICENSE)
